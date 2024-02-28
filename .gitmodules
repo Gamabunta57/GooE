@@ -1,0 +1,4 @@
+[submodule "libs/GooELog"]
+	path = libs/GooELog
+	url = git@github.com:Gamabunta57/GooELog.git
+	branch = main
