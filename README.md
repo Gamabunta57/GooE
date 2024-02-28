@@ -4,7 +4,7 @@ Everything is in the title, this project is an attempt to write a game engine in
 
 ## How to get the project
 
-You can clone but, you will need the submodules that goes with it:
+You can clone it but, you will need the submodules that go with it:
 
 ```bash
 git clone --recurse-submodules git@github.com:Gamabunta57/GooE.git
