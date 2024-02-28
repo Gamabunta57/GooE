@@ -11,7 +11,7 @@ SET output=bin/debug/app.exe
 
 SET flags=-Wall -Werror -std=c99 -O0 -g
 REM -Ipath
-SET includeFlags= 
+SET includeFlags=-Ilibs/GooELog/src/
 REM -lfile
 SET linkerFlags= 
 SET defines=-DDEBUG
