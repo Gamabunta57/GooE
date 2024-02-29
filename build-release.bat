@@ -15,7 +15,7 @@ REM -Ipath
 SET includeFlags=-Ilibs/GooELog/src/ -Ivendors/sdl/include/
 REM -lfile
 SET linkerFlags=-Lvendors/build/sdl/lib -lSDL3
-SET defines=
+SET defines=-DRELEASE -DGOOE_LOG_NONE
 
 ECHO "Building application in RELEASE mode"
 clang %files% %flags% %includeFlags% %linkerFlags% %defines% -o %output%
