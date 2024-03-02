@@ -26,6 +26,7 @@ If you want to test the project as-is please notice that some images are not pro
 The file to provide is:
 
 - assets/img/test.png
+- assets/music/test.ogg
 
 ### Building the project when all the dependencies are already built
 
@@ -75,13 +76,29 @@ Make sure [SDL](#sdl3) is built first as it is required for SDL_image to be buil
 
 ```batch
 cd vendors\sdl_image
-git submodule init
-git submodule update
+git submodule update --init
 mkdir build
 cd build
 cmake.exe .. -DCMAKE_BUILD_TYPE=Release -DSDL3_DIR="$pwd\..\..\build\sdl\cmake"
 cmake.exe --build . --config Release --parallel
-cmake.exe --install . --config Release --prefix ../../build/sdl_image
+cmake.exe --install . --config Release --prefix ..\..\build\sdl_image
 ```
 
 This will build SDL3_image and create the folder structure that is compatible with the batch script to build the project itself.
+
+#### SDL_mixer
+
+To load sound and music the SDL way we need [SDL_mixer](https://wiki.libsdl.org/SDL2_mixer).
+Make sure [SDL](#sdl3) is built first as it is required for SDL_image to be built.
+
+```batch
+cd vendors\sdl_mixer
+git submodule update --init
+mkdir build
+cd build
+cmake.exe .. -DCMAKE_BUILD_TYPE=Release -DSDL3_DIR="$pwd\..\..\build\sdl\cmake"
+cmake.exe --build . --config Release --parallel
+cmake.exe --install . --config Release --prefix ..\..\build\sdl_mixer
+```
+
+This will build SDL3_mixer and create the folder structure that is compatible with the batch script to build the project itself.
