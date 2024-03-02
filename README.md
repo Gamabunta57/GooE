@@ -89,7 +89,7 @@ This will build SDL3_image and create the folder structure that is compatible wi
 #### SDL_mixer
 
 To load sound and music the SDL way we need [SDL_mixer](https://wiki.libsdl.org/SDL2_mixer).
-Make sure [SDL](#sdl3) is built first as it is required for SDL_image to be built.
+Make sure [SDL](#sdl3) is built first as it is required for SDL_mixer to be built.
 
 ```batch
 cd vendors\sdl_mixer
