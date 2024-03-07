@@ -12,7 +12,7 @@ SET output=%outputDir%app.exe
 
 SET flags=-Wall -Werror -std=c99 -O3
 REM -Ipath
-SET includeFlags=-Ilibs/GooELog/src/ -Ivendors/build/sdl/include/ -Ivendors/build/sdl_image/include/ -Ivendors/build/sdl_mixer/include/
+SET includeFlags=-Ilibs/gooeLog/ -Ivendors/build/sdl/include/ -Ivendors/build/sdl_image/include/ -Ivendors/build/sdl_mixer/include/
 REM -lfile
 SET linkerFlags=-Lvendors/build/sdl/lib -lSDL3 -Lvendors/build/sdl_image/lib -lSDL3_image -Lvendors/build/sdl_mixer/lib -lSDL3_mixer
 SET defines=-DRELEASE -DGOOE_LOG_NONE
