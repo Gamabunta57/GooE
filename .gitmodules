@@ -1,7 +1,3 @@
-[submodule "libs/GooELog"]
-	path = libs/GooELog
-	url = git@github.com:Gamabunta57/GooELog.git
-	branch = main
 [submodule "vendors/sdl"]
 	path = vendors/sdl
 	url = git@github.com:libsdl-org/SDL.git
