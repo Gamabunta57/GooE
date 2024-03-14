@@ -1,12 +1,22 @@
 #ifndef GOOE_LOG_H
 #   define GOOE_LOG_H
 
+#   ifdef WIN32
+#   if defined(gooeLog_EXPORTS) // add by CMake 
+#       define  GOOE_LOG_API __declspec(dllexport)
+#   else
+#       define  GOOE_LOG_API 
+#   endif
+#else
+#   define GOOE_LOG_API
+#endif
+
 #   define GOOE_LOG_LEVEL_DEBUG 0
 #   define GOOE_LOG_LEVEL_INFO 1
 #   define GOOE_LOG_LEVEL_WARNING 2
 #   define GOOE_LOG_LEVEL_ERROR 3
 
-    void gooe_log(unsigned char logLevel, char* fileName, int line, char* format, ...);
+    GOOE_LOG_API void gooe_log(unsigned char logLevel, char* fileName, int line, char* format, ...);
 
 #   ifdef GOOE_LOG_NONE
 #       define LOG_DEBUG(fmt, ...)
@@ -31,7 +41,7 @@
         "\033[31m", // red
     };
 
-    void gooe_log(unsigned char logLevel, char* fileName, int line, char* format, ...) {
+    GOOE_LOG_API void gooe_log(unsigned char logLevel, char* fileName, int line, char* format, ...) {
         va_list args;
         va_start(args, format);
 

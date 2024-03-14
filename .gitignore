@@ -1,5 +1,6 @@
 assets/
-bin/
+output/
+build/
 vendors/build/
 
 .vscode/

@@ -4,8 +4,8 @@
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_mixer/SDL_mixer.h>
 
-#define GOOE_LOG_IMPLEMENTATION
 #include <gooeLog/log.h>
+#include "meta.h"
 #include "const.h"
 
 void init();
@@ -20,10 +20,7 @@ static double loop_end = 0.0;
 static double loop_length = 0.0;
 
 int main(int argc, char** argv) {
-    LOG_INFO("For your %s", "INFO");
-    LOG_DEBUG("For your %s", "DEBUG");
-    LOG_WARN("For your %s", "WARNING");
-    LOG_ERR("For your %s", "ERROR");
+    LOG_INFO("Booting GooE v%s", GOOE_VERSION);
 
     init();
     SDL_Event event;
