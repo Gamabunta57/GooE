@@ -1,5 +1,26 @@
+# Project specific paths
 assets/
-bin/
-vendors/build/
+output/
+build/
+vendors/builds/
+src/meta.h
 
+# IDE specific paths
 .vscode/
+.cache/
+
+# CMake specific paths
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# OS Specific
+.DS_Store

@@ -32,10 +32,20 @@ The file to provide is:
 
 If all the dependencies are already built, then you just have to pick one the following script and run it.
 
-```batch
-.\build-debug.bat
-.\build-pre-release.bat
-.\build-release.bat
+```bash
+# For a default (Congif=Debug) build
+mkdir build
+cd build
+cmake ../
+cmake --build .
+```
+
+```bash
+# For a Release build
+mkdir build
+cd build
+cmake ../ -DCMAKE_BUILD_TYPE=Release
+cmake --build .
 ```
 
 ### Building the dependencies
@@ -58,13 +68,13 @@ The details could be found here on the [SDL official website](https://wiki.libsd
 
 You can build it the way you want but, this project goes with the classic CMake following the instructions of the SDL official website.
 
-```batch
-cd vendors\sdl
+```bash
+cd vendors/sdl
 mkdir build
 cd build
-cmake.exe .. -DCMAKE_BUILD_TYPE=Release
+cmake.exe ../ -DCMAKE_BUILD_TYPE=Release
 cmake.exe --build . --config Release --parallel
-cmake.exe --install . --config Release --prefix ../../build/sdl
+cmake.exe --install . --config Release --prefix ../../builds
 ```
 
 This will build SDL3 for you and create the folder structure that is compatible with the batch script to build the project itself.
@@ -74,14 +84,14 @@ This will build SDL3 for you and create the folder structure that is compatible 
 To load images the SDL way we need [SDL_image](https://wiki.libsdl.org/SDL2_image).
 Make sure [SDL](#sdl3) is built first as it is required for SDL_image to be built.
 
-```batch
-cd vendors\sdl_image
+```bash
+cd vendors/sdl_image
 git submodule update --init
 mkdir build
 cd build
-cmake.exe .. -DCMAKE_BUILD_TYPE=Release -DSDL3_DIR="$pwd\..\..\build\sdl\cmake"
+cmake.exe ../ -DCMAKE_BUILD_TYPE=Release -DSDL3_DIR="$pwd/../../build/sdl/cmake"
 cmake.exe --build . --config Release --parallel
-cmake.exe --install . --config Release --prefix ..\..\build\sdl_image
+cmake.exe --install . --config Release --prefix ../../builds
 ```
 
 This will build SDL3_image and create the folder structure that is compatible with the batch script to build the project itself.
@@ -91,14 +101,14 @@ This will build SDL3_image and create the folder structure that is compatible wi
 To load sound and music the SDL way we need [SDL_mixer](https://wiki.libsdl.org/SDL2_mixer).
 Make sure [SDL](#sdl3) is built first as it is required for SDL_mixer to be built.
 
-```batch
-cd vendors\sdl_mixer
+```bash
+cd vendors/sdl_mixer
 git submodule update --init
 mkdir build
 cd build
-cmake.exe .. -DCMAKE_BUILD_TYPE=Release -DSDL3_DIR="$pwd\..\..\build\sdl\cmake"
+cmake.exe .. -DCMAKE_BUILD_TYPE=Release -DSDL3_DIR="$pwd/../../build/sdl/cmake"
 cmake.exe --build . --config Release --parallel
-cmake.exe --install . --config Release --prefix ..\..\build\sdl_mixer
+cmake.exe --install . --config Release --prefix ../../builds
 ```
 
 This will build SDL3_mixer and create the folder structure that is compatible with the batch script to build the project itself.
