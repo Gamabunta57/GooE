@@ -1,26 +1,26 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <SDL3_mixer/SDL_mixer.h>
 
 #include <gooeLog/log.h>
+
+#include "core/gooe.h"
+#include "core/audio.h"
+#include "core/assetLoader.h"
 #include "meta.h"
 #include "const.h"
-#include "core/gooe.h"
 
 void init();
 void quit();
-static SDL_Surface* image = NULL;
-static SDL_Texture* texture = NULL;
-static Mix_Music* music = NULL;
-static double loop_start = 0.0;
-static double loop_end = 0.0;
-static double loop_length = 0.0;
 
 GooE* gooe;
+void* texture;
+void* music;
 
-int main(int argc, char** argv) {
+int main() {
     LOG_INFO("Booting GooE v%s (%s)", GOOE_VERSION, GOOE_COMPILE_MODE);
 
     init();
@@ -55,59 +55,12 @@ int main(int argc, char** argv) {
 void init() {
     gooe = gooe_init();
 
-    if (IMG_Init(IMG_INIT_PNG) < 0) {
-        LOG_ERR("SDL image could not initialise: %s", SDL_GetError());
-        exit(1);
-    }
+    music = gooe_assetLoadMusic("assets/music/test.ogg");
+    texture = gooe_assetLoadImage(gooe->renderer, "assets/img/test.png");
 
-    Mix_VolumeMusic(MIX_MAX_VOLUME);
-    music = Mix_LoadMUS_RW(SDL_RWFromFile("assets/music/test.ogg", "rb"), SDL_TRUE);
-
-    if (!music) {
-        LOG_ERR("SDL mixer could not load the music: %s", SDL_GetError());
-        exit(1);
-    }
-    LOG_INFO("SDL music loaded successfully.");
-
-    loop_start = Mix_GetMusicLoopStartTime(music);
-    loop_end = Mix_GetMusicLoopEndTime(music);
-    loop_length = Mix_GetMusicLoopLengthTime(music);
-
-    #ifndef GOOE_LOG_NONE
-    double duration = Mix_MusicDuration(music);
-    LOG_INFO("Loaded music duration is: %fsec", duration);
-    #endif
-
-    if (loop_start > 0.0 && loop_end > 0.0 && loop_length > 0.0) {
-        LOG_INFO("Loop points: start %g sec, end %g sec, length %g sec", loop_start, loop_end, loop_length);
-    } else {
-        LOG_INFO("The loaded music is not looping.");
-    }
-
-    Mix_FadeInMusic(music, -1, 0);
-
-    image = IMG_Load("assets/img/test.png");
-    if (!image) {
-        LOG_ERR("SDL image could load surface: %s", SDL_GetError());
-        exit(1);
-    }
-    LOG_INFO("SDL image successfully loaded the surface");
-
-    texture = SDL_CreateTextureFromSurface(gooe->renderer, image);
-    if (!texture) {
-        LOG_ERR("SDL could not create the texture out from the surface: %s", SDL_GetError());
-    }
-    LOG_INFO("SDL texture created successfully");
+    gooe_audioPlayLoop(music);
 }
 
 void quit() {
-    Mix_FreeMusic(music);
-    music = NULL;
-    SDL_DestroyTexture(texture);
-    texture = NULL;
-    SDL_DestroySurface(image);
-    image = NULL;
-    IMG_Quit();
-
     gooe_destroy();
 }
