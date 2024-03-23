@@ -2,5 +2,5 @@
 
 #include "types.h"
 
-void gooe_start(GooE* gooe);
-void gooe_stop(GooE* gooe);
+void gooe_windowInit(GooE* gooe);
+void gooe_windowDestroy(GooE* gooe);

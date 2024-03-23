@@ -11,7 +11,6 @@
 
 void init();
 void quit();
-static SDL_Renderer* renderer = NULL;
 static SDL_Surface* image = NULL;
 static SDL_Texture* texture = NULL;
 static Mix_Music* music = NULL;
@@ -43,10 +42,10 @@ int main(int argc, char** argv) {
                 }
             }
         }
-        SDL_SetRenderDrawColor(renderer, 80, 10, 160, 255);
-        SDL_RenderClear(renderer);
-        SDL_RenderTexture(renderer, texture, &srcRect, &dstRect);
-        SDL_RenderPresent(renderer);
+        SDL_SetRenderDrawColor(gooe->renderer, 80, 10, 160, 255);
+        SDL_RenderClear(gooe->renderer);
+        SDL_RenderTexture(gooe->renderer, texture, &srcRect, &dstRect);
+        SDL_RenderPresent(gooe->renderer);
         dstRect.x += 2;
         SDL_Delay(16);
     }
@@ -55,7 +54,6 @@ int main(int argc, char** argv) {
 
 void init() {
     gooe = gooe_init();
-    gooe_start(gooe);
 
     if (IMG_Init(IMG_INIT_PNG) < 0) {
         LOG_ERR("SDL image could not initialise: %s", SDL_GetError());
@@ -98,12 +96,6 @@ void init() {
 
     Mix_FadeInMusic(music, -1, 0);
 
-    renderer = SDL_CreateRenderer(gooe->window, NULL, 0);
-    if (!renderer) {
-        LOG_ERR("SDL failed to create the renderer: %s", SDL_GetError());
-        exit(1);
-    }
-
     image = IMG_Load("assets/img/test.png");
     if (!image) {
         LOG_ERR("SDL image could load surface: %s", SDL_GetError());
@@ -111,7 +103,7 @@ void init() {
     }
     LOG_INFO("SDL image successfully loaded the surface");
 
-    texture = SDL_CreateTextureFromSurface(renderer, image);
+    texture = SDL_CreateTextureFromSurface(gooe->renderer, image);
     if (!texture) {
         LOG_ERR("SDL could not create the texture out from the surface: %s", SDL_GetError());
     }
@@ -125,9 +117,7 @@ void quit() {
     texture = NULL;
     SDL_DestroySurface(image);
     image = NULL;
-    SDL_DestroyRenderer(renderer);
-    renderer = NULL;
     IMG_Quit();
 
-    gooe_stop(gooe);
+    gooe_destroy();
 }
