@@ -19,6 +19,10 @@ endif()
 
 message(STATUS "Building project in '${CMAKE_BUILD_TYPE}' mode")
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+endif()
+
 set(DESTINATION_EXECUTABLE_FOLDER $<1:${PROJECT_SOURCE_DIR}>/output/bin/$<1:${CMAKE_BUILD_TYPE}>)
 set(DESTINATION_LIB_FOLDER $<1:${PROJECT_SOURCE_DIR}>/output/libs/$<1:${CMAKE_BUILD_TYPE}>)
 
