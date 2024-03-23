@@ -3,4 +3,5 @@ target_sources(gooe
     PRIVATE window.c
     PRIVATE renderer.c
     PRIVATE audio.c
+    PRIVATE assetLoader.c
 )
