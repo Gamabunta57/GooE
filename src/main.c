@@ -7,10 +7,10 @@
 #include <gooeLog/log.h>
 #include "meta.h"
 #include "const.h"
+#include "core/gooe.h"
 
 void init();
 void quit();
-static SDL_Window* window = NULL;
 static SDL_Renderer* renderer = NULL;
 static SDL_Surface* image = NULL;
 static SDL_Texture* texture = NULL;
@@ -19,8 +19,10 @@ static double loop_start = 0.0;
 static double loop_end = 0.0;
 static double loop_length = 0.0;
 
+GooE* gooe;
+
 int main(int argc, char** argv) {
-    LOG_INFO("Booting GooE v%s", GOOE_VERSION);
+    LOG_INFO("Booting GooE v%s (%s)", GOOE_VERSION, GOOE_COMPILE_MODE);
 
     init();
     SDL_Event event;
@@ -30,7 +32,7 @@ int main(int argc, char** argv) {
         .w = 32, .h = 32
     };
     SDL_FRect dstRect = {
-        .x = (SCREEN_WIDTH - 32) / 2, .y = (SCREEN_HEIGHT - 32) / 2,
+        .x = (SCREEN_WIDTH - 32) / 2.0f, .y = (SCREEN_HEIGHT - 32) / 2.0f,
         .w = 32, .h = 32
     };
     while(!shouldQuit) {
@@ -52,11 +54,8 @@ int main(int argc, char** argv) {
 }
 
 void init() {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
-        LOG_ERR("SDL could not initialise: %s", SDL_GetError());
-        exit(1);
-    }
-    LOG_INFO("SDL initialisation success.");
+    gooe = gooe_init();
+    gooe_start(gooe);
 
     if (IMG_Init(IMG_INIT_PNG) < 0) {
         LOG_ERR("SDL image could not initialise: %s", SDL_GetError());
@@ -99,14 +98,7 @@ void init() {
 
     Mix_FadeInMusic(music, -1, 0);
 
-    window = SDL_CreateWindow("GooE", SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-    if (!window) {
-        LOG_ERR("SDL failed to create window: %s", SDL_GetError());
-        exit(1);
-    }
-    LOG_INFO("SDL window creation success.");
-
-    renderer = SDL_CreateRenderer(window, NULL, 0);
+    renderer = SDL_CreateRenderer(gooe->window, NULL, 0);
     if (!renderer) {
         LOG_ERR("SDL failed to create the renderer: %s", SDL_GetError());
         exit(1);
@@ -135,8 +127,7 @@ void quit() {
     image = NULL;
     SDL_DestroyRenderer(renderer);
     renderer = NULL;
-    SDL_DestroyWindow(window);
-    window = NULL;
     IMG_Quit();
-    SDL_Quit();
+
+    gooe_stop(gooe);
 }

@@ -1,4 +1,8 @@
-add_executable(gooe main.c)
+add_executable(gooe
+    main.c
+    core/gooe.c
+    core/window.c
+)
 
 set_source_files_properties(${SOURCES} PROPERTIES LANGUAGE C)
 set_target_properties(gooe PROPERTIES LINKER_LANGUAGE C)
@@ -9,14 +13,14 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     add_compile_definitions(GOOE_LOG_NONE)
 endif()
 
-configure_file(meta.h.in meta.h
+configure_file(meta.h.in ${CMAKE_CURRENT_SOURCE_DIR}/meta.h
     NEWLINE_STYLE UNIX
 )
 
 target_include_directories(gooe
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
     PUBLIC ./libs
     PUBLIC ${GOOE_VENDORS_BUILDS}
-    PUBLIC ${PROJECT_BINARY_DIR}/src
 )
 
 target_link_libraries(gooe gooeLog)
