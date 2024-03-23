@@ -2,6 +2,7 @@
 #include <SDL3/SDL.h>
 #include <gooeLog/log.h>
 
+#include "core/audio.h"
 #include "core/renderer.h"
 #include "types.h"
 #include "window.h"
@@ -18,10 +19,12 @@ GooE* gooe_init() {
     _init();
     gooe_windowInit(&gooe);
     gooe_rendererInit(&gooe);
+    gooe_audioInit(&gooe);
     return &gooe;
 }
 
 void gooe_destroy() {
+    gooe_audioDestroy(&gooe);
     gooe_rendererDestroy(&gooe);
     gooe_windowDestroy(&gooe);
     _destroy();

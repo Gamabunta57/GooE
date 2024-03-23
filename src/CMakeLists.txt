@@ -1,9 +1,8 @@
 add_executable(gooe
     main.c
-    core/gooe.c
-    core/window.c
-    core/renderer.c
 )
+
+add_subdirectory(core)
 
 set_source_files_properties(${SOURCES} PROPERTIES LANGUAGE C)
 set_target_properties(gooe PROPERTIES LINKER_LANGUAGE C)

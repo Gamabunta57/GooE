@@ -60,16 +60,6 @@ void init() {
         exit(1);
     }
 
-    SDL_AudioSpec spec = {
-        .freq = MIX_DEFAULT_FREQUENCY,
-        .format = MIX_DEFAULT_FORMAT,
-        .channels = MIX_DEFAULT_CHANNELS,
-    };
-
-    if (Mix_OpenAudio(0, &spec) < 0) {
-        LOG_ERR("SDL mixer could not initialise: %s", SDL_GetError());
-        exit(1);
-    } 
     Mix_VolumeMusic(MIX_MAX_VOLUME);
     music = Mix_LoadMUS_RW(SDL_RWFromFile("assets/music/test.ogg", "rb"), SDL_TRUE);
 
