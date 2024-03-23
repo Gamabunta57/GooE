@@ -2,6 +2,7 @@ add_executable(gooe
     main.c
     core/gooe.c
     core/window.c
+    core/renderer.c
 )
 
 set_source_files_properties(${SOURCES} PROPERTIES LANGUAGE C)
